@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Aluno | Bio-Biblio</title>
+    <link rel="stylesheet" href="estilo/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body style="background-color: #1a252f; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px;">
+
+    <div class="form-container" style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: 100%; max-width: 600px;">
+        <h2 style="text-align: center; color: #333; margin-bottom: 30px;">
+            <i class="fas fa-user-plus"></i> Cadastrar Novo Aluno
+        </h2>
+
+        <form id="formCadastroAluno">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div class="form-group">
+                    <label style="font-weight: 600; display: block; margin-bottom: 5px;">Nome Completo:</label>
+                    <input type="text" id="nome" class="input-standard" required style="width: 100%;">
+                </div>
+                <div class="form-group">
+                    <label style="font-weight: 600; display: block; margin-bottom: 5px;">RA Escolar:</label>
+                    <input type="text" id="ra" class="input-standard" required style="width: 100%;">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div class="form-group">
+                    <label style="font-weight: 600; display: block; margin-bottom: 5px;">E-mail:</label>
+                    <input type="email" id="email" class="input-standard" required style="width: 100%;">
+                </div>
+                <div class="form-group">
+                    <label style="font-weight: 600; display: block; margin-bottom: 5px;">Telefone:</label>
+                    <input type="text" id="telefone" class="input-standard" placeholder="(00) 00000-0000" style="width: 100%;">
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+            <h4 style="color: #666; margin-bottom: 15px;"><i class="fas fa-map-marker-alt"></i> Endereço Detalhado</h4>
+
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-bottom: 15px;">
+                <div class="form-group">
+                    <label style="font-weight: 600; display: block; margin-bottom: 5px;">CEP:</label>
+                    <input type="text" id="cep" class="input-standard" placeholder="00000-000" maxlength="9" style="width: 100%;" onblur="buscarCEPNoCadastro()">
+                </div>
+                <div class="form-group">
+                    <label style="font-weight: 600; display: block; margin-bottom: 5px;">Rua/Logradouro:</label>
+                    <input type="text" id="rua" class="input-standard" style="width: 100%;">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 80px 1fr 80px; gap: 15px; margin-bottom: 15px;">
+                <div class="form-group">
+                    <label style="font-weight: 600; display: block; margin-bottom: 5px;">Nº:</label>
+                    <input type="text" id="numero" class="input-standard" style="width: 100%;">
+                </div>
+                <div class="form-group">
+                    <label style="font-weight: 600; display: block; margin-bottom: 5px;">Bairro:</label>
+                    <input type="text" id="bairro" class="input-standard" style="width: 100%;">
+                </div>
+                <div class="form-group">
+                    <label style="font-weight: 600; display: block; margin-bottom: 5px;">UF:</label>
+                    <input type="text" id="estado" class="input-standard" maxlength="2" style="width: 100%;">
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 30px;">
+                <label style="font-weight: 600; display: block; margin-bottom: 5px;">Cidade:</label>
+                <input type="text" id="cidade" class="input-standard" style="width: 100%;">
+            </div>
+
+            <div style="display: flex; gap: 15px;">
+                <button type="submit" class="btn-save" style="flex: 2; padding: 15px; font-size: 1rem;">Confirmar Cadastro</button>
+                <button type="button" onclick="window.location.href='index.html'" class="btn-cancel" style="flex: 1; padding: 15px;">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Função para buscar CEP automaticamente
+        async function buscarCEPNoCadastro() {
+            let cepValue = document.getElementById('cep').value.replace(/\D/g, '');
+            if (cepValue.length === 8) {
+                try {
+                    const response = await fetch(`https://viacep.com.br/ws/${cepValue}/json/`);
+                    const data = await response.json();
+                    if (!data.erro) {
+                        document.getElementById('rua').value = data.logradouro;
+                        document.getElementById('bairro').value = data.bairro;
+                        document.getElementById('cidade').value = data.localidade;
+                        document.getElementById('estado').value = data.uf;
+                        document.getElementById('numero').focus();
+                    }
+                } catch (e) { console.error("Erro ao buscar CEP"); }
+            }
+        }
+
+        // Lógica de envio do formulário
+        document.getElementById('formCadastroAluno').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const dados = {
+                acao: 'cadastrar_aluno',
+                nome: document.getElementById('nome').value,
+                ra: document.getElementById('ra').value,
+                email: document.getElementById('email').value,
+                telefone: document.getElementById('telefone').value,
+                cep: document.getElementById('cep').value,
+                rua: document.getElementById('rua').value,
+                numero: document.getElementById('numero').value,
+                bairro: document.getElementById('bairro').value,
+                cidade: document.getElementById('cidade').value,
+                estado: document.getElementById('estado').value
+            };
+
+            try {
+                const response = await fetch('api.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dados)
+                });
+                const result = await response.json();
+
+                if (result.sucesso) {
+                    alert("Aluno cadastrado com sucesso!");
+                    window.location.href = 'lista_alunos.html';
+                } else {
+                    alert("Erro: " + result.erro);
+                }
+            } catch (err) {
+                alert("Erro ao conectar com o servidor.");
+            }
+        });
+    </script>
+</body>
+</html>

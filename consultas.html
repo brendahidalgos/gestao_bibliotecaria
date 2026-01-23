@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultas e Relatórios | Bio-Biblio</title>
+    <link rel="stylesheet" href="estilo/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-leaf"></i> <span>Bio-Biblio</span>
+            </div>
+            <nav>
+                <a href="index.html"><i class="fas fa-book"></i> Biblioteca</a>
+                <a href="lista_alunos.html"><i class="fas fa-users"></i> Lista de Alunos</a>
+                <a href="consultas.html" class="active"><i class="fas fa-search"></i> Consultas</a>
+            </nav>
+
+            <div class="logout-container" style="margin-top: auto; padding: 20px;">
+                <a href="#" id="btn-logout" style="color: #ff4d4d; text-decoration: none; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-sign-out-alt"></i> <span>Sair do Sistema</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <h2><i class="fas fa-file-invoice"></i> Relatório de Empréstimos Ativos</h2>
+                
+                <div class="search-container" style="display: flex; gap: 10px; margin-left: auto; align-items: center;">
+                    <input type="text" id="inputBuscaConsultas" class="input-standard" 
+                        placeholder="Filtrar livro, aluno ou RA..." 
+                        style="height: 45px; min-width: 300px;">
+                    
+                    <button id="btnLimparBusca" class="btn-secondary" title="Limpar Busca" 
+                            style="height: 45px; width: 45px; display: flex; align-items: center; justify-content: center; background: #6c757d; color: white; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;">
+                        <i class="fas fa-times" style="font-size: 1.2rem;"></i>
+                    </button>
+                </div>
+
+            </header>
+
+            <section class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Livro</th>
+                            <th>Aluno (RA)</th>
+                            <th>Data Empréstimo</th>
+                            <th>Prazo Devolução</th>
+                            <th>Status de Prazo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaConsultas">
+                        </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Segurança de Acesso
+        if (localStorage.getItem('logado') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        // Cache local para busca rápida
+        let todosOsEmprestimos = [];
+
+        // Logout
+        document.getElementById('btn-logout').addEventListener('click', (e) => {
+            e.preventDefault();
+            if(confirm("Deseja realmente sair?")) {
+                localStorage.removeItem('logado');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Função para carregar os dados da API
+        async function carregarRelatorio() {
+            try {
+                const resp = await fetch('api.php?tipo=consultas');
+                todosOsEmprestimos = await resp.json();
+                renderizarTabela(todosOsEmprestimos);
+            } catch (error) {
+                console.error("Erro ao carregar relatório:", error);
+            }
+        }
+
+        // Função para construir as linhas da tabela
+        function renderizarTabela(dados) {
+            const corpo = document.getElementById('listaConsultas');
+            corpo.innerHTML = "";
+            
+            if (dados.length === 0) {
+                corpo.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Nenhum registro encontrado.</td></tr>";
+                return;
+            }
+
+            const hoje = new Date();
+            hoje.setHours(0,0,0,0); // Normaliza hora para comparação precisa
+
+            dados.forEach(item => {
+                const dataPrevista = new Date(item.data_devolucao_prevista + 'T12:00:00'); // Evita erro de fuso horário
+                const atrasado = dataPrevista < hoje;
+                
+                const dEmp = new Date(item.data_emprestimo + 'T12:00:00').toLocaleDateString('pt-BR');
+                const dPrev = dataPrevista.toLocaleDateString('pt-BR');
+
+                corpo.innerHTML += `
+                    <tr>
+                        <td><strong>${item.titulo}</strong></td>
+                        <td>${item.aluno_nome} <br> <small style="color:#777">RA: ${item.ra}</small></td>
+                        <td>${dEmp}</td>
+                        <td>${dPrev}</td>
+                        <td>
+                            <span class="badge ${atrasado ? 'badge-warning' : 'badge-success'}" style="background-color: ${atrasado ? '#ff4d4d' : '#2ecc71'}; color: white; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem;">
+                                ${atrasado ? 'EM ATRASO' : 'NO PRAZO'}
+                            </span>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        // Lógica da Barra de Pesquisa (Filtro em tempo real)
+        const inputBusca = document.getElementById('inputBuscaConsultas');
+        inputBusca.addEventListener('input', (e) => {
+            const termo = e.target.value.toLowerCase();
+            
+            const filtrados = todosOsEmprestimos.filter(item => {
+                return item.titulo.toLowerCase().includes(termo) || 
+                       item.aluno_nome.toLowerCase().includes(termo) || 
+                       item.ra.toLowerCase().includes(termo);
+            });
+            
+            renderizarTabela(filtrados);
+        });
+
+        // Botão Limpar
+        document.getElementById('btnLimparBusca').addEventListener('click', () => {
+            inputBusca.value = "";
+            renderizarTabela(todosOsEmprestimos);
+        });
+
+        // Inicialização
+        carregarRelatorio();
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Alunos | Bio-Biblio</title>
+    <link rel="stylesheet" href="estilo/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-leaf"></i> <span>Bio-Biblio</span>
+            </div>
+            <nav>
+                <a href="index.html"><i class="fas fa-book"></i> Biblioteca</a>
+                <a href="lista_alunos.html" class="active"><i class="fas fa-users"></i> Lista de Alunos</a>
+                <a href="consultas.html"><i class="fas fa-search"></i> Consultas</a>
+            </nav>
+
+            <div class="logout-container" style="margin-top: auto; padding: 20px;">
+                <a href="#" id="btn-logout" style="color: #ff4d4d; text-decoration: none; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-sign-out-alt"></i> <span>Sair do Sistema</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <h2><i class="fas fa-users"></i> Alunos Cadastrados</h2>
+                    <div class="search-container" style="display: flex; gap: 10px; margin-left: auto; align-items: center;">
+                    <input type="text" id="inputBuscaAlunos" class="input-standard" 
+                        placeholder="Aluno" 
+                        style="height: 45px; min-width: 300px;">                    
+                    <button id="btnLimparBusca" class="btn-secondary" title="Limpar Busca" 
+                            style="height: 45px; width: 45px; display: flex; align-items: center; justify-content: center; background: #6c757d; color: white; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;">
+                        <i class="fas fa-times" style="font-size: 1.2rem;"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>RA</th>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaAlunosCorpo">
+                        </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div id="modalEditarAluno" class="modal">
+        <div class="modal-content" style="max-width: 550px;"> <h3><i class="fas fa-user-edit"></i> Editar Aluno</h3>
+            
+            <input type="hidden" id="editAlunoId">
+            
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-bottom: 15px;">
+                <div>
+                    <label style="font-weight: 600;">Nome Completo:</label>
+                    <input type="text" id="editAlunoNome" class="input-standard" style="width: 100%;">
+                </div>
+                <div>
+                    <label style="font-weight: 600;">RA:</label>
+                    <input type="text" id="editAlunoRA" class="input-standard" style="width: 100%;">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                <div>
+                    <label style="font-weight: 600;">E-mail:</label>
+                    <input type="email" id="editAlunoEmail" class="input-standard" style="width: 100%;">
+                </div>
+                <div>
+                    <label style="font-weight: 600;">Telefone:</label>
+                    <input type="text" id="editAlunoTelefone" class="input-standard" style="width: 100%;">
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+            <h4 style="margin-bottom: 15px; color: #666;"><i class="fas fa-map-marker-alt"></i> Endereço</h4>
+
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 10px; margin-bottom: 15px;">
+                <div>
+                    <label style="font-weight: 600;">CEP:</label>
+                    <input type="text" id="editAlunoCEP" class="input-standard" style="width: 100%;" placeholder="00000-000">
+                </div>
+                <div>
+                    <label style="font-weight: 600;">Rua/Logradouro:</label>
+                    <input type="text" id="editAlunoRua" class="input-standard" style="width: 100%;">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 10px; margin-bottom: 15px;">
+                <div>
+                    <label style="font-weight: 600;">Nº:</label>
+                    <input type="text" id="editAlunoNumero" class="input-standard" style="width: 100%;">
+                </div>
+                <div>
+                    <label style="font-weight: 600;">Bairro:</label>
+                    <input type="text" id="editAlunoBairro" class="input-standard" style="width: 100%;">
+                </div>
+                <div>
+                    <label style="font-weight: 600;">UF:</label>
+                    <input type="text" id="editAlunoEstado" class="input-standard" style="width: 100%;" maxlength="2">
+                </div>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: 600;">Cidade:</label>
+                <input type="text" id="editAlunoCidade" class="input-standard" style="width: 100%;">
+            </div>
+            
+            <div class="modal-footer">
+                <button onclick="fecharModalEdicao()" class="btn-cancel">Cancelar</button>
+                <button onclick="salvarEdicaoAluno()" class="btn-save">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
