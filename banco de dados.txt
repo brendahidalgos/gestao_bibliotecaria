@@ -1,0 +1,66 @@
+-- ==============================
+-- CRIAÇÃO DO BANCO DE DADOS
+-- ==============================
+CREATE DATABASE IF NOT EXISTS bio_biblio
+CHARACTER SET latin1
+COLLATE latin1_swedish_ci;
+
+USE bio_biblio;
+
+-- ==============================
+-- TABELA: alunos
+-- ==============================
+CREATE TABLE alunos (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    telefone VARCHAR(20),
+    email VARCHAR(100) NOT NULL,
+    ra VARCHAR(50) NOT NULL,
+    rua VARCHAR(255),
+    numero VARCHAR(20),
+    bairro VARCHAR(100),
+    cep VARCHAR(10),
+    cidade VARCHAR(100),
+    estado VARCHAR(2),
+    PRIMARY KEY (id),
+    UNIQUE KEY ra (ra)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ==============================
+-- TABELA: usuarios
+-- ==============================
+CREATE TABLE usuarios (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    usuario VARCHAR(50) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY usuario (usuario)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ==============================
+-- TABELA: livros
+-- ==============================
+CREATE TABLE livros (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    titulo VARCHAR(255) NOT NULL,
+    autor VARCHAR(255) NOT NULL,
+    status ENUM('Disponível','Emprestado') DEFAULT 'Disponível',
+    aluno_id INT(11),
+    data_emprestimo DATE,
+    data_devolucao_prevista DATE,
+    isbn VARCHAR(20),
+    editora VARCHAR(100),
+    ano_publicacao INT(11),
+    edicao VARCHAR(50),
+    genero VARCHAR(50),
+    sinopse TEXT,
+    PRIMARY KEY (id),
+    KEY aluno_id (aluno_id),
+    CONSTRAINT fk_livros_alunos
+        FOREIGN KEY (aluno_id)
+        REFERENCES alunos (id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+COMMIT;
