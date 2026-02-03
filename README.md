@@ -18,10 +18,11 @@ Siga os passos abaixo para ter o sistema rodando na sua máquina local:
 Abra o seu terminal (ou Git Bash) e execute:
 
 Bash
-git clone https://github.com/brendahidalgos/gestao}_bibliotecaria.git
+git clone https://github.com/brendahidalgos/gestao_bibliotecaria.git
+
 2. Acessar a Pasta
 Bash
-cd NOME_DO_REPOSITORIO
+cd gestao_bibliotecaria
 ## 🗄️ Configuração do Banco de Dados
 
 Para que o sistema funcione, você precisa configurar o banco de dados utilizando os comandos que deixei no arquivo bancodedados.txt.
