@@ -24,19 +24,11 @@ Bash
 cd NOME_DO_REPOSITORIO
 ## 🗄️ Configuração do Banco de Dados
 
-Para que o sistema funcione, você precisa configurar o banco de dados utilizando os comandos que deixei no arquivo banco.txt.
+Para que o sistema funcione, você precisa configurar o banco de dados utilizando os comandos que deixei no arquivo bancodedados.txt.
 
 Abra o seu terminal do Banco de Dados (ex: MySQL, PostgreSQL, etc).
 
-Crie o banco de dados principal:
-
-SQL
-CREATE DATABASE gestao_bibliotecaria;
-Selecione o banco criado:
-
-SQL
-USE gestao_bibliotecaria;
-Abra o arquivo bancodedados.txt na raiz deste projeto, copie todos os comandos SQL e cole no seu terminal de banco de dados para criar as tabelas e relacionamentos necessários.
+Crie o banco de dados com os comandos no arquivo.
 
 ## 💻 Tecnologias Utilizadas
 [HTML, CSS, JAVASCRIPT, PHP E MYSQL]
