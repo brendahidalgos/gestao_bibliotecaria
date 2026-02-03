@@ -31,7 +31,10 @@ Abra o seu terminal do Banco de Dados (ex: MySQL, PostgreSQL, etc).
 
 Crie o banco de dados com os comandos no arquivo.
 
-##  Usuário: admin - Senha: 123
+##  Para ter acesso ao sistema, tem um usuário cadastrado no banco como:
+
+Usuário: admin - Senha: 123
+
 ## 💻 Tecnologias Utilizadas
 [HTML, CSS, JAVASCRIPT, PHP E MYSQL]
 
