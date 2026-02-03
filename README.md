@@ -33,3 +33,14 @@ Crie o banco de dados com os comandos no arquivo.
 
 ## 💻 Tecnologias Utilizadas
 [HTML, CSS, JAVASCRIPT, PHP E MYSQL]
+
+## 📧 Contato
+
+Se tiver alguma dúvida ou sugestão, pode me chamar!
+
+* **GitHub**: [@brendahidalgos](https://github.com/brendahidalgos)
+
+## ✍️ Autor
+
+* **@brendahidalgos** - Aluna do curso técnico de Desenvolvimento de Sistemas.
+
