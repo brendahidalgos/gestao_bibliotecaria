@@ -63,4 +63,5 @@ CREATE TABLE livros (
         ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-COMMIT;
+INSERT INTO `usuarios` (`usuario`, `senha`) 
+VALUES ('admin', '123');

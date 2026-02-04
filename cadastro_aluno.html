@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Aluno | Bio-Biblio</title>
+    <title>Cadastrar Aluno | Biblio</title>
     <link rel="stylesheet" href="estilo/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body style="background-color: #1a252f; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px;">
+<body style="background-color: #515151a6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px;">
 
-    <div class="form-container" style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: 100%; max-width: 600px;">
+    <div class="form-container" style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: 100%; max-width: 600px;">
         <h2 style="text-align: center; color: #333; margin-bottom: 30px;">
             <i class="fas fa-user-plus"></i> Cadastrar Novo Aluno
         </h2>
@@ -37,10 +37,9 @@
                 </div>
             </div>
 
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
-            <h4 style="color: #666; margin-bottom: 15px;"><i class="fas fa-map-marker-alt"></i> Endereço Detalhado</h4>
+            <h4 style="color: #666; margin-bottom: 10px;"><i class="fas fa-map-marker-alt"></i> Endereço Detalhado</h4>
 
-            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-bottom: 15px;">
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-bottom: 10px;">
                 <div class="form-group">
                     <label style="font-weight: 600; display: block; margin-bottom: 5px;">CEP:</label>
                     <input type="text" id="cep" class="input-standard" placeholder="00000-000" maxlength="9" style="width: 100%;" onblur="buscarCEPNoCadastro()">

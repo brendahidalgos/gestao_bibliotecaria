@@ -1,11 +1,12 @@
 /* --- VARIÁVEIS E CONFIGURAÇÕES GERAIS --- */
 :root {
-    --primary: #1e293b;
+    --primary: #530801;
     --accent: #10b981;
     --bg: #f8fafc;
     --text: #334155;
     --white: #ffffff;
     --danger: #ef4444;
+    --disponivel: rgb(33, 215, 33);
 }
 
 * { 
@@ -26,10 +27,6 @@ body {
     min-height: 100vh; 
     width: 100%;
 }
-
-/* ============================================
-   LAYOUT PRINCIPAL - SIDEBAR E MAIN
-   ============================================ */
 
 /* --- SIDEBAR --- */
 .sidebar { 
@@ -54,12 +51,12 @@ body {
 }
 
 .logo i { 
-    color: var(--accent); 
+    color: var(--white); 
 }
 
 nav a { 
     display: block; 
-    color: #cbd5e1; 
+    color: #ffffff; 
     text-decoration: none; 
     padding: 12px; 
     margin-bottom: 5px; 
@@ -68,7 +65,7 @@ nav a {
 }
 
 nav a:hover, nav a.active { 
-    background: #334155; 
+    background: #6d6d70; 
     color: white; 
 }
 
@@ -97,10 +94,7 @@ nav a:hover, nav a.active {
     padding: 30px; 
 }
 
-/* ============================================
-   BARRA SUPERIOR (TOP BAR)
-   ============================================ */
-
+/*BARRA SUPERIOR (TOP BAR)*/
 .top-bar { 
     display: flex; 
     justify-content: space-between; 
@@ -131,10 +125,7 @@ nav a:hover, nav a.active {
     font-size: 1rem; 
 }
 
-/* ============================================
-   SEÇÃO DE ESTATÍSTICAS (CARDS)
-   ============================================ */
-
+/*SEÇÃO DE ESTATÍSTICAS (CARDS)*/
 .stats { 
     display: grid; 
     grid-template-columns: repeat(3, 1fr); 
@@ -154,11 +145,11 @@ nav a:hover, nav a.active {
     font-size: 2rem; 
     color: var(--primary); 
 }
+.card h3.disponivel{
+    color: var(--disponivel);
+}
 
-/* ============================================
-   TABELAS E DADOS
-   ============================================ */
-
+/*TABELAS E DADOS*/
 .table-container { 
     background: white; 
     border-radius: 12px; 
@@ -203,10 +194,7 @@ td {
     color: #991b1b; 
 }
 
-/* ============================================
-   BOTÕES E AÇÕES
-   ============================================ */
-
+/*BOTÕES E AÇÕES*/
 .btn-add { 
     background: var(--accent); 
     color: white; 
@@ -258,7 +246,7 @@ td {
     font-size: 1.1rem; 
     padding: 8px;
     transition: transform 0.2s, color 0.2s;
-    color: #555;
+    color: #3498db;
     margin-left: 10px; 
 }
 
@@ -266,10 +254,7 @@ td {
     transform: scale(1.2);
 }
 
-/* ============================================
-   MODAIS
-   ============================================ */
-
+/*MODAIS*/
 .modal {
     display: none;
     position: fixed;
@@ -321,10 +306,7 @@ td {
     }
 }
 
-/* ============================================
-   FORMULÁRIOS E INPUTS
-   ============================================ */
-
+/*FORMULÁRIOS E INPUTS*/
 .form-container {
     background: white;
     padding: 40px;
@@ -371,10 +353,7 @@ td {
     margin-bottom: 5px;
 }
 
-/* ============================================
-   PÁGINAS DE LOGIN E CADASTRO
-   ============================================ */
-
+/*PÁGINAS DE LOGIN E CADASTRO*/
 .login-card {
     background: white;
     padding: 40px;
